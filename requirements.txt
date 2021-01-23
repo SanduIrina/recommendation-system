@@ -1,0 +1,11 @@
+easydict==1.7
+numpy==1.19.4
+pandas==1.0.3
+pickleshare==0.7.5
+scikit-image==0.16.2
+scikit-learn==0.23.2
+scikit-surprise==1.1.1
+scipy==1.5.4
+seaborn==0.10.0
+sklearn==0.0
+surprise==0.1
