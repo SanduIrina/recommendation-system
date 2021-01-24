@@ -108,7 +108,7 @@ def update_recommendations(user, song, rating, mode, do_retrain=False):
             to_update_song[user] = [[song, rating]]
     if do_retrain:
         retrain(mode)
-    
+
 def get_predictions_for_user(user_id, mode):
     predictions = pd.read_csv("predictions_" + mode + ".csv")
     result = []
@@ -121,3 +121,8 @@ def get_predictions_for_user(user_id, mode):
         else:
             result += [[title, float(rating)]]
     return result
+
+
+def get_mapping():
+	global mapping
+	return mapping
