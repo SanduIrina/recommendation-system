@@ -56,7 +56,7 @@ def run():
 			print("Recommended songs: ")
 
 			for song in songs:
-				print("%d\t%s" % (mapping[song], song))
+				print("%d\t%s" % (0, song))
 		elif action in ["3.", "3", "give_rating", "give rating"]:
 			track_title = input("Enter track title: ")
 			rating = input("Enter rating: ")

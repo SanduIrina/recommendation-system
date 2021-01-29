@@ -21,9 +21,11 @@ def update_recommendation(rating_tuples):
 
 PATH_CL_8 = "./clustered-tracks/tracks_8_clusters.csv"
 PATH_CL_16 = "./clustered-tracks/tracks_16_clusters.csv"
+PATH_TITLES = "./track_artist_title.csv"
 
 tracks_8_clusters = None
 tracks_16_clusters = None
+track_artist_title = None
 
 user_ids = {
 	"Mihai" :	 "b80344d063b5ccb3212f76538f3d9e43d87dca9e",
@@ -45,6 +47,9 @@ def init():
 	global mapping
 	global inverse_mapping
 	global track_title_list
+	global track_artist_title
+
+	track_artist_title = pd.read_csv(PATH_TITLES, index_col=0)
 
 	load_data("collab-filtering/data/")
 	mapping = get_mapping()
@@ -94,6 +99,7 @@ def log_rating(track_title, rating, mode = "song_name"):
 
 def get_recommendation(mode):
 	global track_title_list
+	global track_artist_title
 	global inverse_mapping
 
 	if active_user is None:
@@ -111,10 +117,23 @@ def get_recommendation(mode):
 
 		songs = random.choices(inverse_mapping[int(cluster_id)], k = 5)
 
-
 	rand_songs = random.choices(track_title_list, k = 5)
 	songs.extend(rand_songs)
-	return list(set(songs))
+
+	songs = list(set(songs))
+
+	songs_w_artists = []
+
+	for song in songs:
+
+		try:
+			title = list(track_artist_title.loc[track_artist_title["track_title"] == song]["artist_name"])[0]
+			songs_w_artists.append("%s - %s" % ((title, song)))
+		except Exception as e:
+			songs_w_artists.append(song)
+
+
+	return songs_w_artists
 
 
 def update_recommendation(mode = "song_name"):
